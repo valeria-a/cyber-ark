@@ -22,16 +22,19 @@ def dup():
 # dup()
 
 
+@greeting
 def fact():
     n = int(input("insert a num"))
-    print(math.factorial(n))
-
+    # print(math.factorial(n))
+    return math.factorial(n)
 
 # foo = fact
 # foo()
 
 if __name__ == '__main__':
-    print(dup.__name__)
-    print(dup.__doc__)
-    dup()
+    # print(dup.__name__)
+    # print(dup.__doc__)
+    # dup()
+    ret_val = fact()
+    print(ret_val)
 
