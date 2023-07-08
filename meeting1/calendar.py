@@ -11,6 +11,8 @@ class Calendar:
     @property
     def start(self):
         return self._start
+    # start = property(start)
+
 
     @start.setter
     def start(self, new_start):
@@ -18,6 +20,9 @@ class Calendar:
             raise ValueError()
         else:
             self._start = new_start
+    # start = start<property>.setter(start)
+    # property.setter(start)
+
 
     def get_tasks_num(self):
         return sum(map(lambda e: len(e), self._tasks.values()))
