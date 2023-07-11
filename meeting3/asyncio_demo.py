@@ -1,5 +1,6 @@
 import asyncio
 import time
+from asyncio import TaskGroup
 
 
 async def wait(sec):
@@ -11,16 +12,25 @@ async def wait(sec):
 # event loop:  wait(3)
 # coroutine
 async def main():
+    # tasks = []
+    async with TaskGroup() as tg:
+        # for i in range(1, 6):
+        #     tasks.append(tg.create_task(wait(i)))
+        tasks = [tg.create_task(wait(i)) for i in range(1, 6)]
 
-    task1 = asyncio.create_task(wait(2))
-    task2 = asyncio.create_task(wait(3))
+    print('Bye bye')
 
-    await task1
-    await task2
+
+    # task1 = asyncio.create_task(wait(2))
+    # task2 = asyncio.create_task(wait(3))
+
+    # await asyncio.gather(task1, task2)
+    # await task1
+    # await task2
     #Going to wait for 2 seconds
 
-
-asyncio.run(main())
+if __name__ == '__main__':
+    asyncio.run(main())
 # asyncio.
 # while True:
 
