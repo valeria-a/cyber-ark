@@ -3,7 +3,6 @@ import json
 import os.path
 from abc import ABC, abstractmethod
 
-
 class TextFile(ABC):
 
     def __init__(self, file_path: str):
@@ -42,6 +41,9 @@ class CsvFile(TextFile):
         super().__init__(file_path)
         self._delimiter = delimiter
 
+    def get_rows(self):
+        pass
+
     def _get_ext(self):
         return 'csv'
 
@@ -61,18 +63,36 @@ class TxtFile(TextFile):
 
 class JsonFile(TextFile):
 
+    def is_object(self):
+        pass
+
     def _get_specific_content(self, fd):
         return json.load(fd)
 
     def _get_ext(self):
         return 'json'
 
-csv_file = CsvFile("/Users/valeria/src/morning-ninjas/lesson9/files/data/files_ex/username-or-email.csv", ';')
-txt = TxtFile("/Users/valeria/src/morning-ninjas/lesson9/files/data/alice_in_wonderland.txt")
-json_file = JsonFile("/Users/valeria/src/morning-ninjas/lesson9/files/data/my_persons.json")
-files_list = [csv_file, txt, json_file]
-for f in files_list:
-    print(f.get_content())
+class TextFileFactory:
+    @staticmethod
+    def get_file_mngr(filename):
+        name, ext = os.path.splitext(filename)
+        match ext:
+            case '.csv':
+                return CsvFile(filename)
+            case '.json':
+                return JsonFile(filename)
+            case '.txt':
+                return TxtFile(filename)
+            case _:
+                raise ValueError('Unsupported file extension')
 
-# csv_file = CsvFile("/Users/valeria/src/morning-ninjas/lesson9/files/data/AAPL.csv")
+if __name__ == '__main__':
+    f = ['a.json', 'b.txt', 'c.csv']
+    a = JsonFile('sdfsdf.json')
+    b = CsvFile('sdfsdf.csv')
+    mngrs = []
+    for i in f:
+        mngrs.append(TextFileFactory.get_file_mngr(i))
+    for m in mngrs:
+        pass
 
