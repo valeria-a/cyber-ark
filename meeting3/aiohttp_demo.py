@@ -6,11 +6,16 @@ import aiohttp
 
 url = "https://api.kanye.rest/"
 
+quotes = []
+
 
 async def get_quote(session):
     async with session.get(url, ssl=False) as resp:
+        curr_list_len = len(quotes)
         response = await resp.json()
-        return response
+        print(curr_list_len, '==', len(quotes))
+        quotes.append(response)
+        # return response
 
 
 async def main():
@@ -18,16 +23,18 @@ async def main():
     tasks = []
     async with aiohttp.ClientSession() as session:
         async with TaskGroup() as tg:
-            for i in range(10):
+            for i in range(100):
+                # t = await tg.create_task(get_quote(session))
+                # print(t)
+                # tasks.append(t)
                 tasks.append(tg.create_task(get_quote(session)))
-                # resp = await get_quote(session)
-                # print(resp)
-            # print(type(tasks[0]))
-    # for completed_task in tasks:
-    #     print(completed_task)
+        # I reach this only when all the taskss are finished
     e = time.time()
     print(f"Total: {e-s} seconds")
 
-    for t in tasks:
-        print(t.result())
+    print(quotes)
+
+    # for t in tasks:
+    #     print(t.result())
+        # print(t)
 asyncio.run(main(), debug=True)
