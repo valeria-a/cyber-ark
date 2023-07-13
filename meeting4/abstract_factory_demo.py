@@ -93,3 +93,9 @@ if __name__ == '__main__':
     ShippingFactoryProvider\
         .get_shipping_factory(company_name)\
         .get_shipping_service(service_type)
+
+# class Plot:
+#     def __init__(self, label=False, grid=True, legend=True):
+#         pass
+#
+# Plot().setLegend().setGrid().setLabels()
