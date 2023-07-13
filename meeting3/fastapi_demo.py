@@ -35,13 +35,16 @@ async def upload(file: UploadFile):
 
     if not os.path.exists("temp/"):
         os.makedirs("temp/")
+
     # async with aiofiles.open(out_file_path, 'wb') as out_file:
-    #     content = await in_file.read()  # async read
+    #     content = await file.read()  # async read
     #     await out_file.write(content)  # async write
     # in chunks
     async with aiofiles.open(out_file_path, 'wb') as out_file:
         while content := await file.read(1024):  # async read chunk
             await out_file.write(content)  # async write chunk
+    # p = Popen(cmd, stdout=PIPE, bufsize=0)
+    # await p.wait() # 30 mins
 
     # non blocking
     task = task_mngr.run_conversion(out_file_path, task_id)

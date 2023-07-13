@@ -11,12 +11,23 @@ quotes = []
 
 async def get_quote(session):
     async with session.get(url, ssl=False) as resp:
-        curr_list_len = len(quotes)
+        # curr_list_len = len(quotes)
         response = await resp.json()
-        print(curr_list_len, '==', len(quotes))
-        quotes.append(response)
-        # return response
+        # print(curr_list_len, '==', len(quotes))
+        # quotes.append(response)
+        return response
 
+# async def main():
+#     s = time.time()
+#     quotes = []
+#     async with aiohttp.ClientSession() as session:
+#         for i in range(100):
+#             result = await asyncio.create_task(get_quote(session))
+#             quotes.append(result)
+#     e = time.time()
+#     print(f"Total: {e-s} seconds")
+#
+#     print(quotes)
 
 async def main():
     s = time.time()
@@ -24,9 +35,6 @@ async def main():
     async with aiohttp.ClientSession() as session:
         async with TaskGroup() as tg:
             for i in range(100):
-                # t = await tg.create_task(get_quote(session))
-                # print(t)
-                # tasks.append(t)
                 tasks.append(tg.create_task(get_quote(session)))
         # I reach this only when all the taskss are finished
     e = time.time()

@@ -19,10 +19,12 @@ class TasksMngr:
         self.futures: dict[str, Future] = {}
         self.events: dict[str, Event] = {}
 
+
     @staticmethod
     def convert(task, cancelled_event: Event):
         cmd = ['ffmpeg', '-i', task.in_file, task.out_file]
         p = Popen(cmd)
+
         while True:
             try:
                 p.wait(1)
@@ -33,6 +35,7 @@ class TasksMngr:
                     print('killing task ', task.id)
                     p.kill()
                     task.status = 'cancelled'
+                    break
         # while p.returncode is None:
         #     if cancelled_event.is_set():
         #         print('killing task ', task.id)
